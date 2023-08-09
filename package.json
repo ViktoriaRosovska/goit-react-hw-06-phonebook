@@ -1,8 +1,8 @@
 {
-  "name": "goit-react-hw-04-phonebook",
+  "name": "goit-react-hw-06-phonebook",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://viktoriarosovska.github.io/goit-react-hw-04-phonebook/",
+  "homepage": "https://viktoriarosovska.github.io/goit-react-hw-06-phonebook/",
   "dependencies": {
     "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
     "@emotion/react": "^11.11.1",
