@@ -1,19 +1,38 @@
-import PropTypes from 'prop-types';
 import { FormWrapper, FormInput, FormButton } from './ContactForm.styled';
-import { useLocalStorage } from 'components/hooks/useLocalStorage';
+// import { useLocalStorage } from 'components/hooks/useLocalStorage';
+import { useSelector, useDispatch } from 'react-redux';
 
-export function ContactForm({ onStorageContact }) {
-  const [user, setUser] = useLocalStorage('user', { name: '', number: '' });
+import * as services from '../../services/notify';
+import { nanoid } from 'nanoid';
+import { addContact } from 'redux/phonebookSlice';
+import { filteredQuery } from 'redux/filterSlice';
+export function ContactForm() {
+  const contacts = useSelector(state => state.contacts);
+  const dispatch = useDispatch();
+
+  // const [user, setUser] = useLocalStorage('user', { name: '', number: '' });
 
   const onFormSubmit = e => {
     e.preventDefault();
-    const userName = e.currentTarget.elements.name.value;
-    const userNumber = e.currentTarget.elements.number.value;
-    if (user) {
-      setUser({ name: userName, number: userNumber });
-    }
+    const userName = e.currentTarget.elements.name.value.trim();
+    const userNumber = e.currentTarget.elements.number.value.trim();
 
-    onStorageContact(userName, userNumber);
+    if (contacts.find(user => user.name === userName)) {
+      return services.Notify.warning(`${userName} is already in contacts`);
+    }
+    if (contacts.find(user => user.number === userNumber)) {
+      return services.Notify.warning(
+        `This number: ${userNumber} is already in contacts`
+      );
+    }
+    const user = {
+      name: userName,
+      number: userNumber,
+      id: nanoid(),
+    };
+
+    dispatch(addContact(user));
+    dispatch(filteredQuery({ value: '' }));
     e.currentTarget.reset();
   };
 
@@ -42,7 +61,3 @@ export function ContactForm({ onStorageContact }) {
     </form>
   );
 }
-
-ContactForm.propTypes = {
-  onStorageContact: PropTypes.func.isRequired,
-};

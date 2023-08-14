@@ -41,3 +41,6 @@ input:focus,
 input:hover {
   outline: 2px solid #f26b94;
 }
+* {
+  box-sizing: border-box;
+}

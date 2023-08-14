@@ -7,7 +7,6 @@ const Container = styled.div`
   border-radius: 10px;
   padding: 20px;
   display: flex;
-  width: 700px;
   align-items: flex-end;
   gap: 20px;
   position: absolute;

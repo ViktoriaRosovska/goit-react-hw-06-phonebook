@@ -2,13 +2,14 @@ import styled from 'styled-components';
 
 const FormWrapper = styled.div`
   background-color: white;
-  width: 300px;
+  width: 340px;
   display: flex;
+  justify-content: center;
   flex-direction: column;
   padding: 20px;
   border-radius: 10px;
   gap: 10px;
-  height: 240px;
+  height: 280px;
   -webkit-box-shadow: inset rgba(50, 50, 93, 0.25) 2px 0px 3px 1px,
     inset rgba(0, 0, 0, 0.3) -2px 1px 3px 0px;
   -moz-box-shadow: inset rgba(50, 50, 93, 0.25) 2px 0px 3px 1px,

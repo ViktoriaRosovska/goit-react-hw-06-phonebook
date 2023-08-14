@@ -1,25 +1,31 @@
-import PropTypes from 'prop-types';
 import {
   FormInput,
   FindLabel,
   FindWrapper,
 } from 'components/ContactForm/ContactForm.styled';
-export function Filter({ onFilterContact, filter }) {
+
+import { useSelector, useDispatch } from 'react-redux';
+import { filteredQuery } from 'redux/filterSlice';
+
+export function Filter() {
+  const dispatch = useDispatch();
+  const filterQuery = useSelector(state => state.filter.value);
+  console.log(filterQuery);
+  const onFilterContact = e => {
+    const filter = e.target.value.toLowerCase().trim();
+    dispatch(filteredQuery({ value: `${filter}` }));
+  };
   return (
     <FindWrapper>
       <FindLabel htmlFor="filter">Find contact</FindLabel>
       <FormInput
+        className="findContact"
         type="text"
         name="filter"
+        value={filterQuery}
         title="Find phonebook contact"
-        value={filter}
         onChange={onFilterContact}
       />
     </FindWrapper>
   );
 }
-
-Filter.propTypes = {
-  onFilterContact: PropTypes.func.isRequired,
-  filter: PropTypes.string.isRequired,
-};
