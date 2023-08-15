@@ -1,16 +1,14 @@
 import { FormWrapper, FormInput, FormButton } from './ContactForm.styled';
-// import { useLocalStorage } from 'components/hooks/useLocalStorage';
 import { useSelector, useDispatch } from 'react-redux';
 
 import * as services from '../../services/notify';
-import { nanoid } from 'nanoid';
+
 import { addContact } from 'redux/phonebookSlice';
 import { filteredQuery } from 'redux/filterSlice';
+import { contactsSelector } from 'redux/selectors';
 export function ContactForm() {
-  const contacts = useSelector(state => state.contacts);
+  const contacts = useSelector(contactsSelector);
   const dispatch = useDispatch();
-
-  // const [user, setUser] = useLocalStorage('user', { name: '', number: '' });
 
   const onFormSubmit = e => {
     e.preventDefault();
@@ -28,7 +26,6 @@ export function ContactForm() {
     const user = {
       name: userName,
       number: userNumber,
-      id: nanoid(),
     };
 
     dispatch(addContact(user));

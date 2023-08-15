@@ -18,29 +18,28 @@ import * as services from 'services/notify';
 import { sortOrderConst } from 'constants';
 import { sortOrder } from 'redux/sortSlice';
 import { deleteContact } from 'redux/phonebookSlice';
+import {
+  contactsSelector,
+  filterSelector,
+  sortSelector,
+} from 'redux/selectors';
 
 export function ContactList() {
   const dispatch = useDispatch();
 
-  const contacts = useSelector(state => state.contacts);
-  const filter = useSelector(state => state.filter.value);
-  console.log(filter);
-  const filteredContacts =
-    filter === ''
-      ? contacts
-      : contacts.filter(el => el.name.toLowerCase().includes(filter));
-  console.log(filteredContacts);
-  const order = useSelector(state => state.sort);
-  let sortFilteredList;
-  if (order === sortOrderConst.sortAZ) {
-    sortFilteredList = [...filteredContacts].sort((a, b) =>
-      a.name.localeCompare(b.name)
-    );
-  } else if (order === sortOrderConst.sortZA) {
-    sortFilteredList = [...filteredContacts].sort((a, b) =>
-      b.name.localeCompare(a.name)
-    );
-  }
+  const contacts = useSelector(contactsSelector);
+  const filter = useSelector(filterSelector);
+  const order = useSelector(sortSelector);
+
+  const filterFunc =
+    filter === '' ? _ => true : el => el.name.toLowerCase().includes(filter);
+
+  const sortFunc =
+    order === sortOrderConst.sortAZ
+      ? (a, b) => a.name.localeCompare(b.name)
+      : (a, b) => b.name.localeCompare(a.name);
+
+  const filtered = contacts.filter(filterFunc).sort(sortFunc);
 
   const onDeleteContact = user => {
     services.Confirm.show(
@@ -56,7 +55,6 @@ export function ContactList() {
   };
 
   const onSortContacts = order => {
-    console.log(order);
     return dispatch(sortOrder(order));
   };
 
@@ -66,7 +64,7 @@ export function ContactList() {
         <span>Sort contacts by:</span>
         <Button
           type="button"
-          onClick={() => onSortContacts('az')}
+          onClick={() => onSortContacts(sortOrderConst.sortAZ)}
           title="sort by A-Z"
           aria-label="sort by A-Z"
         >
@@ -74,7 +72,7 @@ export function ContactList() {
         </Button>
         <Button
           type="button"
-          onClick={() => onSortContacts('za')}
+          onClick={() => onSortContacts(sortOrderConst.sortZA)}
           title="sort by Z-A"
           aria-label="sort by Z-A"
         >
@@ -84,20 +82,19 @@ export function ContactList() {
 
       <ContactListRender>
         <ul>
-          {sortFilteredList &&
-            sortFilteredList.map(contact => (
-              <List key={contact.id}>
-                <Span>{contact.name}</Span> <Span>{contact.number}</Span>
-                <Button type="button" onClick={() => onDeleteContact(contact)}>
-                  <SvgIcon component={DeleteForeverIcon}></SvgIcon>
-                </Button>
-              </List>
-            ))}
+          {filtered.map(contact => (
+            <List key={contact.id}>
+              <Span>{contact.name}</Span> <Span>{contact.number}</Span>
+              <Button type="button" onClick={() => onDeleteContact(contact)}>
+                <SvgIcon component={DeleteForeverIcon}></SvgIcon>
+              </Button>
+            </List>
+          ))}
         </ul>
         {!Boolean(contacts.length) && (
           <p>There are no contacts in your phonebook</p>
         )}
-        {!Boolean(sortFilteredList.length) && Boolean(contacts.length) && (
+        {!Boolean(filtered.length) && Boolean(contacts.length) && (
           <p>No more contacts found</p>
         )}
       </ContactListRender>

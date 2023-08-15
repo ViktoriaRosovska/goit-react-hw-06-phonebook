@@ -57,6 +57,12 @@ const Button = styled.button`
   display: flex;
   align-items: center;
   justify-content: center;
+  & svg {
+    fill: black;
+  }
+  & :hover {
+    fill: #f26b94;
+  }
 `;
 
 const SortOptions = styled.div`

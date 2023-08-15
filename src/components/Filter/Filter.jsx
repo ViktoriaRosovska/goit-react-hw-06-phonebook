@@ -6,14 +6,15 @@ import {
 
 import { useSelector, useDispatch } from 'react-redux';
 import { filteredQuery } from 'redux/filterSlice';
+import { filterSelector } from 'redux/selectors';
 
 export function Filter() {
   const dispatch = useDispatch();
-  const filterQuery = useSelector(state => state.filter.value);
-  console.log(filterQuery);
+  const filterQuery = useSelector(filterSelector);
+
   const onFilterContact = e => {
     const filter = e.target.value.toLowerCase().trim();
-    dispatch(filteredQuery({ value: `${filter}` }));
+    dispatch(filteredQuery({ value: filter }));
   };
   return (
     <FindWrapper>

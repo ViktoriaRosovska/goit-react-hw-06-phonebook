@@ -10,14 +10,8 @@ import {
 import { ContactForm } from './ContactForm/ContactForm';
 import { Filter } from './Filter/Filter';
 import { ContactList } from './ContactsList/ContactList';
-// import { useState, useMemo } from 'react';
-// import { useLocalStorage } from './hooks/useLocalStorage';
-
-// const CONTACT_KEY = 'contacts';
 
 export function App() {
-  // const [contacts, setContacts] = useLocalStorage(CONTACT_KEY, mycontacts);
-  // const [filter, setFilter] = useState('');
 
   return (
     <Container>

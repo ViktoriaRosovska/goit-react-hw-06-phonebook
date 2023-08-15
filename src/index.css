@@ -30,10 +30,6 @@ h6 {
   padding: 0;
 }
 
-svg:hover {
-  fill: #f26b94;
-}
-
 input {
   outline: none;
 }

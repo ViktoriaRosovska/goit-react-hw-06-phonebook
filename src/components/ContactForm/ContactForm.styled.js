@@ -20,14 +20,15 @@ const FormWrapper = styled.div`
 
 const FormInput = styled.input`
   background-color: white;
-  border: 1px solid lightgray;
+  border: none;
   border-radius: 5px;
   height: 20px;
   width: 100%;
   margin-bottom: 15px;
+  appearance: none;
 
-  -moz-box-shadow: 2px 2px 7px -0.5px rgba(34, 60, 80, 0.2) inset;
   -webkit-box-shadow: 2px 2px 7px -0.5px rgba(34, 60, 80, 0.2) inset;
+  -moz-box-shadow: 2px 2px 7px -0.5px rgba(34, 60, 80, 0.2) inset;
   box-shadow: 2px 2px 7px -0.5px rgba(34, 60, 80, 0.2) inset;
 `;
 

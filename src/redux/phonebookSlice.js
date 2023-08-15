@@ -1,12 +1,24 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { initialState } from '../constants';
+import { nanoid } from 'nanoid';
 
 const phonebookSlice = createSlice({
   name: 'contacts',
   initialState,
   reducers: {
-    addContact(state, action) {
-      state.push(action.payload);
+    addContact: {
+      reducer(state, action) {
+        state.push(action.payload);
+      },
+      prepare(user) {
+        return {
+          payload: {
+            name: user.name,
+            number: user.number,
+            id: nanoid(),
+          },
+        };
+      },
     },
     deleteContact(state, action) {
       const index = state.findIndex(user => user.id === action.payload);
