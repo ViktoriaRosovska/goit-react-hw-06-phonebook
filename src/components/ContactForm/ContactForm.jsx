@@ -4,7 +4,6 @@ import { useSelector, useDispatch } from 'react-redux';
 import * as services from '../../services/notify';
 
 import { addContact } from 'redux/phonebookSlice';
-import { filteredQuery } from 'redux/filterSlice';
 import { contactsSelector } from 'redux/selectors';
 export function ContactForm() {
   const contacts = useSelector(contactsSelector);
