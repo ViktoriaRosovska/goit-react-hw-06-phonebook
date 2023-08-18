@@ -29,7 +29,6 @@ export function ContactForm() {
     };
 
     dispatch(addContact(user));
-    dispatch(filteredQuery({ value: '' }));
     e.currentTarget.reset();
   };
 
